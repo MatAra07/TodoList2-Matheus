@@ -6,26 +6,45 @@ import TodoForm from './TodoForm';
 
 function App() {
 
-// starting empty for now
 const [todoList, setTodoList] = useState([]);
 
-// handles adding a new todo into state
+// adds new todo item into state
 const addTodo = (todoTitle) => {
 
-// using Date.now because it's quick and easy
-// might swap this out later if duplicate ids ever become an issue
-const newTodoItem = {
-  id: Date.now(),
-  title: todoTitle
+const newTodo = {
+  id: Date.now(), // quick id solution for now
+  title: todoTitle,
+  isCompleted: false
 };
 
-// putting newest item at the top
-setTodoList((oldList) => {
-
-  const updatedList = [newTodoItem, ...oldList];
-
-  return updatedList;
+// putting newest todos first
+setTodoList((prevList) => {
+  return [newTodo, ...prevList];
 });
+
+};
+
+// marks todo as completed
+const completeTodo = (id) => {
+
+const updatedTodoList = todoList.map((todoItem) => {
+
+  if (todoItem.id === id) {
+
+    // keeping object spread because it's easier to read later
+    return {
+      ...todoItem,
+      isCompleted: true
+    };
+
+  }
+
+  return todoItem;
+});
+
+setTodoList(updatedTodoList);
+
+// maybe later i'll move completed items into another section
 
 };
 
@@ -34,10 +53,12 @@ return (
 
   <h1>Todo List</h1>
 
-  {/* passing addTodo down so form can update state */}
   <TodoForm onAddTodo={addTodo} />
 
-  <TodoList todoList={todoList} />
+  <TodoList
+    todoList={todoList}
+    onCompleteTodo={completeTodo}
+  />
 
 </div>
 
