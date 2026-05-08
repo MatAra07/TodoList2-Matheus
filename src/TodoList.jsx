@@ -1,46 +1,45 @@
 import React from 'react';
 import TodoListItem from './TodoListItem';
 
-function TodoList({ todoList }) {
+function TodoList({ todoList, onCompleteTodo }) {
 
-// extra check just in case
-if (!todoList || todoList.length === 0) {
-return <p>No todos yet.</p>;
-}
+// hiding completed todos from main list
+const filteredTodoList = todoList.filter((todo) => {
+return !todo.isCompleted;
+});
 
 return (
-<ul>
+<div>
 
-  {todoList.map((todo) => {
+  {filteredTodoList.length === 0 ? (
 
-    return (
-      <TodoListItem
-        key={todo.id}
-        todo={todo}
-      />
-    );
-  })}
+    <p>
+      Add todo above to get started
+    </p>
 
-</ul>
+  ) : (
+
+    <ul>
+
+      {filteredTodoList.map((todo) => {
+
+        return (
+          <TodoListItem
+            key={todo.id}
+            todo={todo}
+            onCompleteTodo={onCompleteTodo}
+          />
+        );
+
+      })}
+
+    </ul>
+
+  )}
+
+</div>
 
 );
 }
 
 export default TodoList;
-
-TodoListItem.js
-
-import React from 'react';
-
-function TodoListItem(props) {
-
-const todo = props.todo;
-
-return (
-<li>
-{todo.title}
-</li>
-);
-}
-
-export default TodoListItem;
