@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './App.css';
 
-import TodoList from './TodoList';
-import TodoForm from './TodoForm';
+import TodoList from './features/TodoList/TodoList';
+import TodoForm from './features/TodoForm';
 
 function App() {
 
@@ -64,5 +64,19 @@ return (
 
 );
 }
+
+// updates todo title after editing
+const updateTodo = (editedTodo) => {
+const updatedTodos = todoList.map((todoItem) => {
+if (todoItem.id === editedTodo.id) {  return {    ...editedTodo  };}return todoItem;
+});
+setTodoList(updatedTodos);
+};
+// pass updateTodo into TodoList too
+<TodoList
+todoList={todoList}
+onCompleteTodo={completeTodo}
+onUpdateTodo={updateTodo}
+/>
 
 export default App;
