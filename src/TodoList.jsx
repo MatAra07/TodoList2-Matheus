@@ -1,17 +1,46 @@
-function TodoList() {
-  const todoList = [
-    { id: 1, title: 'review resources' },
-    { id: 2, title: 'take notes' },
-    { id: 3, title: 'code out app' }
-  ];
+import React from 'react';
+import TodoListItem from './TodoListItem';
 
-  return (
-    <ul>
-      {todoList.map(todo => (
-        <li key={todo.id}>{todo.title}</li>
-      ))}
-    </ul>
-  );
+function TodoList({ todoList }) {
+
+// extra check just in case
+if (!todoList || todoList.length === 0) {
+return <p>No todos yet.</p>;
+}
+
+return (
+<ul>
+
+  {todoList.map((todo) => {
+
+    return (
+      <TodoListItem
+        key={todo.id}
+        todo={todo}
+      />
+    );
+  })}
+
+</ul>
+
+);
 }
 
 export default TodoList;
+
+TodoListItem.js
+
+import React from 'react';
+
+function TodoListItem(props) {
+
+const todo = props.todo;
+
+return (
+<li>
+{todo.title}
+</li>
+);
+}
+
+export default TodoListItem;
