@@ -1,32 +1,13 @@
-import React from 'react';
-
-function TodoForm() {
-
-// left this hardcoded for now until submit logic is added
-const isDisabled = true;
-
+import React, { useRef } from 'react';
+function TodoForm(props) {
+const inputRef = useRef();
+const handleAddTodo = (event) => {
+// don't want form refreshevent.preventDefault();//
 return (
-<form>
-<label htmlFor="todoTitle">
-Todo:
-</label>
-
-  <input
-    type="text"
-    id="todoTitle"
-    placeholder="add something..."
-  />
-
-  {/* button disabled until i wire up state */}
-  <button type="submit" disabled={isDisabled}>
-    Add Todo
-  </button>
-
-  {/* maybe add validation later */}
-  {/* <p>Please enter a value</p> */}
-</form>
-
+<form onSubmit={handleAddTodo}>
+  <label htmlFor="todoTitle">    
+    Todo:  </label>  <input    ref={inputRef}    type="text"    id="todoTitle"    name="todoTitle"    placeholder="Todo text"    required  />  <button type="submit">    Add Todo  </button> ''
+     {/* testing area */}  {/* <small>Press enter to add</small> */}</form>
 );
 }
-
 export default TodoForm;
